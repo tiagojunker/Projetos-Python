@@ -5,7 +5,7 @@
     Se as datas coicidem então um email é disparadao lembrando da atividade a ser realizada.
 </p>
 
-#
+# -
 
 <h2> O projeto folder.py é um sistema de organização de arquivos em pastas com datas </h2>
 <p> 
