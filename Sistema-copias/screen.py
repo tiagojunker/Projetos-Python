@@ -19,7 +19,7 @@ class Application():
     # Configuração da tela
     def tela(self):
         """ # """
-        self.root.title("TSG - Copy")
+        self.root.title("TSJ - Copy")
         self.root.configure(background='#1e3743')
         self.root.geometry("750x750")
         self.root.resizable(True, True)
@@ -56,14 +56,14 @@ class Application():
         self.nome_agendamento_entry.place(relx=0.02, rely=0.26, relwidth=0.45, relheight=0.08)
 
 
-        self.lb_intervalo = Label(self.frame_1, text='Intervalo',
+        self.lb_intervalo = Label(self.frame_1, text='Intervalo (min)',
                             bg='#dfe3ee', fg='#1e3743', font = ('verdana', 11, 'bold'))
         self.lb_intervalo.place(relx=0.52, rely=0.18)
 
 
         self.intervalo_entry = Entry(self.frame_1,
                             bg='#cfcfcf', fg='#1e3743' ,font=('verdana', 12))
-        self.intervalo_entry.place(relx=0.52, rely=0.26, relwidth=0.15, relheight=0.08)
+        self.intervalo_entry.place(relx=0.52, rely=0.26, relwidth=0.2, relheight=0.08)
 
 
         self.lb_origem = Label(self.frame_1, text='Pasta Origem',
@@ -91,7 +91,7 @@ class Application():
         self.bt_deletar.place(relx=0.02, rely=0.65, relwidth=0.1, relheight=0.10)
 
 
-        self.lb_nome_agendamento_deletar = Label(self.frame_1, text='Nome Do Agendamento a Dgit status[eletar',
+        self.lb_nome_agendamento_deletar = Label(self.frame_1, text='Nome Do Agendamento a Deletar',
                             bg='#dfe3ee', fg='#1e3743', font = ('verdana', 11, 'bold'))
         self.lb_nome_agendamento_deletar.place(relx=0.02, rely=0.78)
 
@@ -101,8 +101,14 @@ class Application():
         self.nome_agendamento_deletar_entry.place(relx=0.02, rely=0.85, relwidth=0.45, relheight=0.08)
 
 
+        self.bt_deletar = Button(self.frame_1, text='Iniciar Serviços',
+                            bg='#00ac58', fg='white', font = ('verdana', 10, 'bold'))
+        self.bt_deletar.place(relx=0.77, rely=0.82, relwidth=0.2, relheight=0.10)
 
 
+        self.bt_deletar = Button(self.frame_1, text='Parar Serviços',
+                            bg='#bd1b20', fg='white', font = ('verdana', 10, 'bold'))
+        self.bt_deletar.place(relx=0.77, rely=0.7, relwidth=0.2, relheight=0.10)
 
     def lista_frame2(self):
         """ # """
@@ -141,10 +147,8 @@ class Application():
         self.destino_entry.delete(0, END)
         self.intervalo_entry.delete(0, END)
 
-        
-        self.listar_agendamentos()
 
-        
+        self.listar_agendamentos()
 
     def listar_agendamentos(self):
         """ # """
@@ -154,7 +158,6 @@ class Application():
         for i in caminho:
             valores = i.split('_')
             self.lista_cli.insert("", END, values=(valores[0], valores[1], valores[2], valores[3]))
-        
 
 
 Application()
