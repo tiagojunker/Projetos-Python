@@ -56,7 +56,7 @@ class Application():
         self.nome_agendamento_entry.place(relx=0.02, rely=0.26, relwidth=0.45, relheight=0.08)
 
 
-        self.lb_intervalo = Label(self.frame_1, text='Intervalo (min)',
+        self.lb_intervalo = Label(self.frame_1, text='Intervalo (sec)',
                             bg='#dfe3ee', fg='#1e3743', font = ('verdana', 11, 'bold'))
         self.lb_intervalo.place(relx=0.52, rely=0.18)
 
@@ -86,7 +86,7 @@ class Application():
         self.destino_entry.place(relx=0.52, rely=0.43, relwidth=0.45, relheight=0.08)
 
 
-        self.bt_deletar = Button(self.frame_1, text='Deletar',
+        self.bt_deletar = Button(self.frame_1, text='Deletar', command=self.delete_process,
                             bg='#107db2', fg='white', font = ('verdana', 10, 'bold'))
         self.bt_deletar.place(relx=0.02, rely=0.65, relwidth=0.1, relheight=0.10)
 
@@ -101,14 +101,14 @@ class Application():
         self.nome_agendamento_deletar_entry.place(relx=0.02, rely=0.85, relwidth=0.45, relheight=0.08)
 
 
-        self.bt_deletar = Button(self.frame_1, text='Iniciar Serviços',
+        self.init_services = Button(self.frame_1, text='Iniciar Serviços',
                             bg='#00ac58', fg='white', font = ('verdana', 10, 'bold'))
-        self.bt_deletar.place(relx=0.77, rely=0.82, relwidth=0.2, relheight=0.10)
+        self.init_services.place(relx=0.77, rely=0.82, relwidth=0.2, relheight=0.10)
 
 
-        self.bt_deletar = Button(self.frame_1, text='Parar Serviços',
+        self.stop_services = Button(self.frame_1, text='Parar Serviços',
                             bg='#bd1b20', fg='white', font = ('verdana', 10, 'bold'))
-        self.bt_deletar.place(relx=0.77, rely=0.7, relwidth=0.2, relheight=0.10)
+        self.stop_services.place(relx=0.77, rely=0.7, relwidth=0.2, relheight=0.10)
 
     def lista_frame2(self):
         """ # """
@@ -138,9 +138,14 @@ class Application():
         destino = str(self.destino_entry.get())
         intervalo = str(self.intervalo_entry.get())
 
-        caminho =  open(fr"{cwd}/sistema-copias/agendamentos.txt", "a", encoding='utf-8') #MUDAR ISSO QUANDO FOR FAZER O EXE retirar /sistema-copias
-        caminho.write(f'{nome}_{origem}_{destino}_{intervalo}_ \n')
-        caminho.close()
+        length_caminho =  open(fr"{cwd}/sistema-copias/agendamentos.txt", "r", encoding='utf-8')
+        length_caminho = length_caminho.readlines()
+
+        if(len(length_caminho) < 3):
+            caminho =  open(fr"{cwd}/sistema-copias/agendamentos.txt", "a", encoding='utf-8') #MUDAR ISSO QUANDO FOR FAZER O EXE retirar /sistema-copias
+            caminho.write(f'{nome}_{origem}_{destino}_{intervalo}_ \n')
+            caminho.close()
+        
 
         self.nome_agendamento_entry.delete(0, END)
         self.origem_entry.delete(0, END)
@@ -158,6 +163,40 @@ class Application():
         for i in caminho:
             valores = i.split('_')
             self.lista_cli.insert("", END, values=(valores[0], valores[1], valores[2], valores[3]))
+
+    def delete_process(self):
+        """ # """
+        line_delete = self.nome_agendamento_deletar_entry.get()
+
+        if(len(line_delete) > 2):
+            current_file = open(fr"{cwd}/sistema-copias/agendamentos.txt", "r", encoding='utf-8')
+            current_file = current_file.readlines()
+
+            preserved_lines = []
+
+            for line in current_file:
+                if(line.split('_')[0] != line_delete):
+                    preserved_lines.append(line)
+            new_file = open(fr"{cwd}/sistema-copias/agendamentos.txt", "w", encoding='utf-8')
+
+            if(len(preserved_lines) == 2):
+                new_file.write(preserved_lines[0])
+                new_file.write(preserved_lines[1])
+                new_file.close()
+                self.listar_agendamentos()
+
+            if(len(preserved_lines) == 1):
+                new_file.write(preserved_lines[0])
+                new_file.close()
+                self.listar_agendamentos()
+
+            if(len(preserved_lines) == 0):
+                new_file.close()
+                self.listar_agendamentos()
+            
+            
+
+
 
 
 Application()
