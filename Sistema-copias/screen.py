@@ -101,12 +101,12 @@ class Application():
         self.nome_agendamento_deletar_entry.place(relx=0.02, rely=0.85, relwidth=0.45, relheight=0.08)
 
 
-        self.init_services = Button(self.frame_1, text='Iniciar Serviços',
+        self.init_services = Button(self.frame_1, text='Iniciar Serviços', command=self.run_script,
                             bg='#00ac58', fg='white', font = ('verdana', 10, 'bold'))
         self.init_services.place(relx=0.77, rely=0.82, relwidth=0.2, relheight=0.10)
 
 
-        self.stop_services = Button(self.frame_1, text='Parar Serviços',
+        self.stop_services = Button(self.frame_1, text='Parar Serviços', command= self.stop_script,
                             bg='#bd1b20', fg='white', font = ('verdana', 10, 'bold'))
         self.stop_services.place(relx=0.77, rely=0.7, relwidth=0.2, relheight=0.10)
 
@@ -138,11 +138,16 @@ class Application():
         destino = str(self.destino_entry.get())
         intervalo = str(self.intervalo_entry.get())
 
-        length_caminho =  open(fr"{cwd}/sistema-copias/agendamentos.txt", "r", encoding='utf-8')
+        length_caminho =  open(fr"{cwd}/agendamentos.txt", "r", encoding='utf-8')
         length_caminho = length_caminho.readlines()
 
-        if(len(length_caminho) < 3):
-            caminho =  open(fr"{cwd}/sistema-copias/agendamentos.txt", "a", encoding='utf-8') #MUDAR ISSO QUANDO FOR FAZER O EXE retirar /sistema-copias
+        if(len(length_caminho) < 3
+            and len(nome)       > 1
+            and len(origem)     > 1
+            and len(destino)    > 1
+            and len(intervalo)  > 1):
+
+            caminho =  open(fr"{cwd}/agendamentos.txt", "a", encoding='utf-8') #MUDAR ISSO QUANDO FOR FAZER O EXE retirar /sistema-copias
             caminho.write(f'{nome}_{origem}_{destino}_{intervalo}_ \n')
             caminho.close()
         
@@ -158,7 +163,7 @@ class Application():
     def listar_agendamentos(self):
         """ # """
         self.lista_cli.delete(*self.lista_cli.get_children())
-        caminho =  open(fr"{cwd}/sistema-copias/agendamentos.txt", "r", encoding='utf-8')
+        caminho =  open(fr"{cwd}/agendamentos.txt", "r", encoding='utf-8')
         caminho = caminho.readlines()
         for i in caminho:
             valores = i.split('_')
@@ -169,7 +174,7 @@ class Application():
         line_delete = self.nome_agendamento_deletar_entry.get()
 
         if(len(line_delete) > 2):
-            current_file = open(fr"{cwd}/sistema-copias/agendamentos.txt", "r", encoding='utf-8')
+            current_file = open(fr"{cwd}/agendamentos.txt", "r", encoding='utf-8')
             current_file = current_file.readlines()
 
             preserved_lines = []
@@ -177,26 +182,39 @@ class Application():
             for line in current_file:
                 if(line.split('_')[0] != line_delete):
                     preserved_lines.append(line)
-            new_file = open(fr"{cwd}/sistema-copias/agendamentos.txt", "w", encoding='utf-8')
-
-            if(len(preserved_lines) == 2):
-                new_file.write(preserved_lines[0])
-                new_file.write(preserved_lines[1])
-                new_file.close()
-                self.listar_agendamentos()
-
-            if(len(preserved_lines) == 1):
-                new_file.write(preserved_lines[0])
-                new_file.close()
-                self.listar_agendamentos()
-
-            if(len(preserved_lines) == 0):
-                new_file.close()
-                self.listar_agendamentos()
             
-            
+            if(len(preserved_lines) != 3):
+                new_file = open(fr"{cwd}/agendamentos.txt", "w", encoding='utf-8')
 
+                if(len(preserved_lines) == 2):
+                    new_file.write(preserved_lines[0])
+                    new_file.write(preserved_lines[1])
+                    new_file.close()
+                    self.listar_agendamentos()
 
+                if(len(preserved_lines) == 1):
+                    new_file.write(preserved_lines[0])
+                    new_file.close()
+                    self.listar_agendamentos()
 
+                if(len(preserved_lines) == 0):
+                    new_file.close()
+                    self.listar_agendamentos()
+                
+    def run_script(self):
+        os.system('TASKKILL /F /IM script.exe')
+        os.popen(fr"{cwd}/script.exe")
+    
+    def stop_script(self):
+        os.system('TASKKILL /F /IM script.exe')
+        # TASKKILL /IM script.exe /T
 
 Application()
+# Criar exe tkinter: pyinstaller --onefile --noconsole --windowed screen.py
+
+
+
+# Melhorias
+
+# Refatorar
+# Gerar um arquivo TXT de Logs

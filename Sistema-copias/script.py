@@ -23,7 +23,7 @@ def run_service(line):
         time.sleep(intervalo_copia)
 
 # Abrindo arquivo com os agendamentos
-archive = open(fr"{cwd}/sistema-copias/agendamentos.txt", "r", encoding='utf-8')
+archive = open(fr"{cwd}/agendamentos.txt", "r", encoding='utf-8')
 archive = archive.readlines()
 
 for _line in archive:
