@@ -202,19 +202,24 @@ class Application():
                     self.listar_agendamentos()
                 
     def run_script(self):
-        os.system('TASKKILL /F /IM script.exe')
+        try:
+            os.system('TASKKILL /F /IM script.exe')
+        except:
+            pass
         os.popen(fr"{cwd}/script.exe")
     
+
     def stop_script(self):
-        os.system('TASKKILL /F /IM script.exe')
+        try:
+            os.system('TASKKILL /F /IM script.exe')
+        except:
+            pass 
         # TASKKILL /IM script.exe /T
 
 Application()
 # Criar exe tkinter: pyinstaller --onefile --noconsole --windowed screen.py
 
 
-
 # Melhorias
-
 # Refatorar
 # Gerar um arquivo TXT de Logs

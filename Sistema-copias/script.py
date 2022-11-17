@@ -17,8 +17,19 @@ def run_service(line):
         destino_arquivos    = valores[2]
 
         local = os.listdir(origem_arquivos)
+        local_to = os.listdir(destino_arquivos)
         for data in local:
-            shutil.copy2(os.path.join(origem_arquivos, data), destino_arquivos)
+            if(data in local_to):
+                pass
+            
+            else:
+                try:
+                    shutil.copy(os.path.join(origem_arquivos, data), destino_arquivos)
+                    log =  open(fr"{cwd}/log.txt", "a", encoding='utf-8') #MUDAR ISSO QUANDO FOR FAZER O EXE retirar /sistema-copias
+                    log.write(f'Arquivo {data} copiado com Sucesso \n')
+                    log.close()
+                except:
+                    print('Não copiado')
 
         time.sleep(intervalo_copia)
 
