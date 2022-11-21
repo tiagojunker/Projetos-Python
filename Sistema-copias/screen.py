@@ -9,15 +9,15 @@ class Application():
     """ # """
     def __init__(self):
         self.root = root
-        self.tela()
-        self.frames_da_tela()
-        self.widgets_frame1()
-        self.lista_frame2()
-        self.listar_agendamentos()
+        self.screen()
+        self.frames_of_screen()
+        self.frame1_widgets()
+        self.frame2_list()
+        self.show_tasks()
         root.mainloop()
       
     # Configuração da tela
-    def tela(self):
+    def screen(self):
         """ # """
         self.root.title("TSJ - Copy")
         self.root.configure(background='#1e3743')
@@ -26,7 +26,7 @@ class Application():
         self.root.maxsize(width="1000", height="1000")
         self.root.minsize(width="400", height="400")
 
-    def frames_da_tela(self):
+    def frames_of_screen(self):
         """ # """
         self.frame_1 = Frame(self.root, bd = 4, bg='#dfe3ee', highlightbackground='#759fe6', highlightthickness=3)
         self.frame_1.place(relx=0.02, rely=0.02, relwidth=0.96, relheight=0.48)
@@ -34,11 +34,11 @@ class Application():
         self.frame_2 = Frame(self.root, bd = 4, bg='#dfe3ee', highlightbackground='#759fe6', highlightthickness=3)
         self.frame_2.place(relx=0.02, rely=0.52, relwidth=0.96, relheight=0.46)
 
-    def widgets_frame1(self):
+    def frame1_widgets(self):
         """ # """
-        self.bt_salvar = Button(self.frame_1, text='Salvar', command=self.salvar_agendamento,
+        self.save_btn = Button(self.frame_1, text='Salvar', command=self.save_task,
                              bg='#107db2', fg='white', font = ('verdana', 10, 'bold'))
-        self.bt_salvar.place(relx=0.02, rely=0.05, relwidth=0.1, relheight=0.10)
+        self.save_btn.place(relx=0.02, rely=0.05, relwidth=0.1, relheight=0.10)
 
 
         # self.bt_editar = Button(self.frame_1, text='Editar',
@@ -46,99 +46,99 @@ class Application():
         # self.bt_editar.place(relx=0.14, rely=0.05, relwidth=0.1, relheight=0.10)
 
 
-        self.lb_nome_agendamento = Label(self.frame_1, text='Nome Do Agendamento',
+        self.name_task_label = Label(self.frame_1, text='Nome Do Agendamento',
                             bg='#dfe3ee', fg='#1e3743', font = ('verdana', 11, 'bold'))
-        self.lb_nome_agendamento.place(relx=0.02, rely=0.18)
+        self.name_task_label.place(relx=0.02, rely=0.18)
 
 
-        self.nome_agendamento_entry = Entry(self.frame_1,
+        self.name_task_entry = Entry(self.frame_1,
                             bg='#cfcfcf', fg='#1e3743' ,font=('verdana', 12))
-        self.nome_agendamento_entry.place(relx=0.02, rely=0.26, relwidth=0.45, relheight=0.08)
+        self.name_task_entry.place(relx=0.02, rely=0.26, relwidth=0.45, relheight=0.08)
 
 
-        self.lb_intervalo = Label(self.frame_1, text='Intervalo (sec)',
+        self.interval_label = Label(self.frame_1, text='Intervalo (sec)',
                             bg='#dfe3ee', fg='#1e3743', font = ('verdana', 11, 'bold'))
-        self.lb_intervalo.place(relx=0.52, rely=0.18)
+        self.interval_label.place(relx=0.52, rely=0.18)
 
 
-        self.intervalo_entry = Entry(self.frame_1,
+        self.interval_entry = Entry(self.frame_1,
                             bg='#cfcfcf', fg='#1e3743' ,font=('verdana', 12))
-        self.intervalo_entry.place(relx=0.52, rely=0.26, relwidth=0.2, relheight=0.08)
+        self.interval_entry.place(relx=0.52, rely=0.26, relwidth=0.2, relheight=0.08)
 
 
-        self.lb_origem = Label(self.frame_1, text='Pasta Origem',
+        self.origin_label = Label(self.frame_1, text='Pasta Origem',
                             bg='#dfe3ee', fg='#1e3743', font = ('verdana', 11, 'bold'))
-        self.lb_origem.place(relx=0.02, rely=0.36)
+        self.origin_label.place(relx=0.02, rely=0.36)
 
 
-        self.origem_entry = Entry(self.frame_1,
+        self.origin_entry = Entry(self.frame_1,
                             bg='#cfcfcf', fg='#1e3743' ,font=('verdana', 12))
-        self.origem_entry.place(relx=0.02, rely=0.43, relwidth=0.45, relheight=0.08)
+        self.origin_entry.place(relx=0.02, rely=0.43, relwidth=0.45, relheight=0.08)
 
 
-        self.lb_destino = Label(self.frame_1, text='Pasta Destino',
+        self.destiny_label = Label(self.frame_1, text='Pasta Destino',
                             bg='#dfe3ee', fg='#1e3743', font = ('verdana', 11, 'bold'))
-        self.lb_destino.place(relx=0.52, rely=0.36)
+        self.destiny_label.place(relx=0.52, rely=0.36)
 
 
-        self.destino_entry = Entry(self.frame_1,
+        self.destiny_entry = Entry(self.frame_1,
                             bg='#cfcfcf', fg='#1e3743' ,font=('verdana', 12))
-        self.destino_entry.place(relx=0.52, rely=0.43, relwidth=0.45, relheight=0.08)
+        self.destiny_entry.place(relx=0.52, rely=0.43, relwidth=0.45, relheight=0.08)
 
 
-        self.bt_deletar = Button(self.frame_1, text='Deletar', command=self.delete_process,
+        self.delete_btn = Button(self.frame_1, text='Deletar', command=self.delete_task,
                             bg='#107db2', fg='white', font = ('verdana', 10, 'bold'))
-        self.bt_deletar.place(relx=0.02, rely=0.65, relwidth=0.1, relheight=0.10)
+        self.delete_btn.place(relx=0.02, rely=0.65, relwidth=0.1, relheight=0.10)
 
 
-        self.lb_nome_agendamento_deletar = Label(self.frame_1, text='Nome Do Agendamento a Deletar',
+        self.delete_name_task_label = Label(self.frame_1, text='Nome Do Agendamento a Deletar',
                             bg='#dfe3ee', fg='#1e3743', font = ('verdana', 11, 'bold'))
-        self.lb_nome_agendamento_deletar.place(relx=0.02, rely=0.78)
+        self.delete_name_task_label.place(relx=0.02, rely=0.78)
 
 
-        self.nome_agendamento_deletar_entry = Entry(self.frame_1,
+        self.name_task_delete_entry = Entry(self.frame_1,
                             bg='#cfcfcf', fg='#1e3743' ,font=('verdana', 12))
-        self.nome_agendamento_deletar_entry.place(relx=0.02, rely=0.85, relwidth=0.45, relheight=0.08)
+        self.name_task_delete_entry.place(relx=0.02, rely=0.85, relwidth=0.45, relheight=0.08)
 
 
-        self.init_services = Button(self.frame_1, text='Iniciar Serviços', command=self.run_script,
+        self.init_services = Button(self.frame_1, text='Iniciar Serviços', command=self.start_program,
                             bg='#00ac58', fg='white', font = ('verdana', 10, 'bold'))
         self.init_services.place(relx=0.77, rely=0.82, relwidth=0.2, relheight=0.10)
 
 
-        self.stop_services = Button(self.frame_1, text='Parar Serviços', command= self.stop_script,
+        self.stop_services = Button(self.frame_1, text='Parar Serviços', command= self.Stop_program,
                             bg='#bd1b20', fg='white', font = ('verdana', 10, 'bold'))
         self.stop_services.place(relx=0.77, rely=0.7, relwidth=0.2, relheight=0.10)
 
-    def lista_frame2(self):
+    def frame2_list(self):
         """ # """
-        self.lista_cli = ttk.Treeview(self.frame_2, height=3, columns=('col1', 'col2', 'col3', 'col4', 'col5'))
-        self.lista_cli.heading("#0", text='')
-        self.lista_cli.heading("#1", text='Nome Agendamento')
-        self.lista_cli.heading("#2", text='Origem')
-        self.lista_cli.heading("#3", text='Destino')
-        self.lista_cli.heading("#4", text='Intervalo')
+        self.cli_list = ttk.Treeview(self.frame_2, height=3, columns=('col1', 'col2', 'col3', 'col4', 'col5'))
+        self.cli_list.heading("#0", text='')
+        self.cli_list.heading("#1", text='Nome Agendamento')
+        self.cli_list.heading("#2", text='Origem')
+        self.cli_list.heading("#3", text='Destino')
+        self.cli_list.heading("#4", text='Intervalo')
 
-        self.lista_cli.column('#0', anchor='center', width=1)
-        self.lista_cli.column('#1', anchor='center', width=130)
-        self.lista_cli.column('#2', anchor='center', width=200)
-        self.lista_cli.column('#3', anchor='center', width=200)
-        self.lista_cli.column('#4', anchor='center', width=100)
+        self.cli_list.column('#0', anchor='center', width=1)
+        self.cli_list.column('#1', anchor='center', width=130)
+        self.cli_list.column('#2', anchor='center', width=200)
+        self.cli_list.column('#3', anchor='center', width=200)
+        self.cli_list.column('#4', anchor='center', width=100)
 
-        self.lista_cli.place(relx=0.01, rely=0.1, relwidth=0.95, relheight=0.85)
+        self.cli_list.place(relx=0.01, rely=0.1, relwidth=0.95, relheight=0.85)
 
-        scroll_bar = Scrollbar (self.lista_cli)
+        scroll_bar = Scrollbar (self.cli_list)
         scroll_bar.pack(side=RIGHT, fill=Y)
 
-    def salvar_agendamento(self):
+    def save_task(self):
         """ # """
                
-        nome = str(self.nome_agendamento_entry.get())
-        origem = str(self.origem_entry.get())
-        destino = str(self.destino_entry.get())
-        intervalo = str(self.intervalo_entry.get())
+        nome = str(self.name_task_entry.get())
+        origem = str(self.origin_entry.get())
+        destino = str(self.destiny_entry.get())
+        intervalo = str(self.interval_entry.get())
 
-        length_caminho =  open(fr"{cwd}/agendamentos.txt", "r", encoding='utf-8')
+        length_caminho =  open(fr"{cwd}/assets/agendamentos.txt", "r", encoding='utf-8')
         length_caminho = length_caminho.readlines()
 
         if(len(length_caminho) < 3
@@ -147,34 +147,34 @@ class Application():
             and len(destino)    > 1
             and len(intervalo)  > 1):
 
-            caminho =  open(fr"{cwd}/agendamentos.txt", "a", encoding='utf-8') #MUDAR ISSO QUANDO FOR FAZER O EXE retirar /sistema-copias
+            caminho =  open(fr"{cwd}/assets/agendamentos.txt", "a", encoding='utf-8')
             caminho.write(f'{nome}_{origem}_{destino}_{intervalo}_ \n')
             caminho.close()
         
 
-        self.nome_agendamento_entry.delete(0, END)
-        self.origem_entry.delete(0, END)
-        self.destino_entry.delete(0, END)
-        self.intervalo_entry.delete(0, END)
+        self.name_task_entry.delete(0, END)
+        self.origin_entry.delete(0, END)
+        self.destiny_entry.delete(0, END)
+        self.interval_entry.delete(0, END)
 
 
-        self.listar_agendamentos()
+        self.show_tasks()
 
-    def listar_agendamentos(self):
+    def show_tasks(self):
         """ # """
-        self.lista_cli.delete(*self.lista_cli.get_children())
-        caminho =  open(fr"{cwd}/agendamentos.txt", "r", encoding='utf-8')
+        self.cli_list.delete(*self.cli_list.get_children())
+        caminho =  open(fr"{cwd}/assets/agendamentos.txt", "r", encoding='utf-8')
         caminho = caminho.readlines()
         for i in caminho:
             valores = i.split('_')
-            self.lista_cli.insert("", END, values=(valores[0], valores[1], valores[2], valores[3]))
+            self.cli_list.insert("", END, values=(valores[0], valores[1], valores[2], valores[3]))
 
-    def delete_process(self):
+    def delete_task(self):
         """ # """
-        line_delete = self.nome_agendamento_deletar_entry.get()
+        line_delete = self.name_task_delete_entry.get()
 
         if(len(line_delete) > 2):
-            current_file = open(fr"{cwd}/agendamentos.txt", "r", encoding='utf-8')
+            current_file = open(fr"{cwd}/assets/agendamentos.txt", "r", encoding='utf-8')
             current_file = current_file.readlines()
 
             preserved_lines = []
@@ -184,32 +184,32 @@ class Application():
                     preserved_lines.append(line)
             
             if(len(preserved_lines) != 3):
-                new_file = open(fr"{cwd}/agendamentos.txt", "w", encoding='utf-8')
+                new_file = open(fr"{cwd}/assets/agendamentos.txt", "w", encoding='utf-8')
 
                 if(len(preserved_lines) == 2):
                     new_file.write(preserved_lines[0])
                     new_file.write(preserved_lines[1])
                     new_file.close()
-                    self.listar_agendamentos()
+                    self.show_tasks()
 
                 if(len(preserved_lines) == 1):
                     new_file.write(preserved_lines[0])
                     new_file.close()
-                    self.listar_agendamentos()
+                    self.show_tasks()
 
                 if(len(preserved_lines) == 0):
                     new_file.close()
-                    self.listar_agendamentos()
+                    self.show_tasks()
                 
-    def run_script(self):
+    def start_program(self):
         try:
             os.system('TASKKILL /F /IM script.exe')
         except:
             pass
-        os.popen(fr"{cwd}/script.exe")
+        os.popen(fr"{cwd}/assets/script.exe")
     
 
-    def stop_script(self):
+    def Stop_program(self):
         try:
             os.system('TASKKILL /F /IM script.exe')
         except:
