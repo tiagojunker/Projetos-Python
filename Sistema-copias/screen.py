@@ -1,6 +1,7 @@
 import os
 from tkinter import *
 from tkinter import ttk
+from tkinter import filedialog
 root = Tk()
 
 cwd = os.getcwd()
@@ -76,6 +77,11 @@ class Application():
         self.origin_entry.place(relx=0.02, rely=0.43, relwidth=0.45, relheight=0.08)
 
 
+        self.origin_btn_add = Button(self.frame_1, text='Escolher', #command=self.save_task,
+                             bg='#808080', fg='white', font = ('verdana', 10, 'bold'))
+        self.origin_btn_add.place(relx=0.37, rely=0.43, relwidth=0.1, relheight=0.08)
+
+
         self.destiny_label = Label(self.frame_1, text='Pasta Destino',
                             bg='#dfe3ee', fg='#1e3743', font = ('verdana', 11, 'bold'))
         self.destiny_label.place(relx=0.52, rely=0.36)
@@ -84,6 +90,11 @@ class Application():
         self.destiny_entry = Entry(self.frame_1,
                             bg='#cfcfcf', fg='#1e3743' ,font=('verdana', 12))
         self.destiny_entry.place(relx=0.52, rely=0.43, relwidth=0.45, relheight=0.08)
+
+
+        self.destiny_btn_add = Button(self.frame_1, text='Escolher', #command=self.save_task,
+                             bg='#808080', fg='white', font = ('verdana', 10, 'bold'))
+        self.destiny_btn_add.place(relx=0.87, rely=0.43, relwidth=0.1, relheight=0.08)
 
 
         self.delete_btn = Button(self.frame_1, text='Deletar', command=self.delete_task,
