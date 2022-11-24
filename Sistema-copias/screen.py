@@ -1,6 +1,7 @@
 import os
 from tkinter import *
 from tkinter import ttk
+from tkinter import Tk
 from tkinter import filedialog
 root = Tk()
 
@@ -42,11 +43,6 @@ class Application():
         self.save_btn.place(relx=0.02, rely=0.05, relwidth=0.1, relheight=0.10)
 
 
-        # self.bt_editar = Button(self.frame_1, text='Editar',
-        #                     bg='#107db2', fg='white', font = ('verdana', 10, 'bold'))
-        # self.bt_editar.place(relx=0.14, rely=0.05, relwidth=0.1, relheight=0.10)
-
-
         self.name_task_label = Label(self.frame_1, text='Nome Do Agendamento',
                             bg='#dfe3ee', fg='#1e3743', font = ('verdana', 11, 'bold'))
         self.name_task_label.place(relx=0.02, rely=0.18)
@@ -71,13 +67,13 @@ class Application():
                             bg='#dfe3ee', fg='#1e3743', font = ('verdana', 11, 'bold'))
         self.origin_label.place(relx=0.02, rely=0.36)
 
-
-        self.origin_entry = Entry(self.frame_1,
+        self.origin_var = StringVar()
+        self.origin_entry = Entry(self.frame_1, textvariable=self.origin_var,
                             bg='#cfcfcf', fg='#1e3743' ,font=('verdana', 12))
-        self.origin_entry.place(relx=0.02, rely=0.43, relwidth=0.45, relheight=0.08)
+        self.origin_entry.place(relx=0.02, rely=0.43, relwidth=0.35, relheight=0.08)
 
 
-        self.origin_btn_add = Button(self.frame_1, text='Escolher', #command=self.save_task,
+        self.origin_btn_add = Button(self.frame_1, text='Escolher', command=self.set_origin_entry,
                              bg='#808080', fg='white', font = ('verdana', 10, 'bold'))
         self.origin_btn_add.place(relx=0.37, rely=0.43, relwidth=0.1, relheight=0.08)
 
@@ -86,13 +82,13 @@ class Application():
                             bg='#dfe3ee', fg='#1e3743', font = ('verdana', 11, 'bold'))
         self.destiny_label.place(relx=0.52, rely=0.36)
 
-
-        self.destiny_entry = Entry(self.frame_1,
+        self.destiny_var = StringVar()
+        self.destiny_entry = Entry(self.frame_1, textvariable=self.destiny_var,
                             bg='#cfcfcf', fg='#1e3743' ,font=('verdana', 12))
-        self.destiny_entry.place(relx=0.52, rely=0.43, relwidth=0.45, relheight=0.08)
+        self.destiny_entry.place(relx=0.52, rely=0.43, relwidth=0.35, relheight=0.08)
 
 
-        self.destiny_btn_add = Button(self.frame_1, text='Escolher', #command=self.save_task,
+        self.destiny_btn_add = Button(self.frame_1, text='Escolher', command=self.set_destiny_entry,
                              bg='#808080', fg='white', font = ('verdana', 10, 'bold'))
         self.destiny_btn_add.place(relx=0.87, rely=0.43, relwidth=0.1, relheight=0.08)
 
@@ -117,7 +113,7 @@ class Application():
         self.init_services.place(relx=0.77, rely=0.82, relwidth=0.2, relheight=0.10)
 
 
-        self.stop_services = Button(self.frame_1, text='Parar Serviços', command= self.Stop_program,
+        self.stop_services = Button(self.frame_1, text='Parar Serviços', command= self.stop_program,
                             bg='#bd1b20', fg='white', font = ('verdana', 10, 'bold'))
         self.stop_services.place(relx=0.77, rely=0.7, relwidth=0.2, relheight=0.10)
 
@@ -211,6 +207,7 @@ class Application():
                 if(len(preserved_lines) == 0):
                     new_file.close()
                     self.show_tasks()
+        self.name_task_delete_entry.delete(0, END)
                 
     def start_program(self):
         try:
@@ -220,12 +217,20 @@ class Application():
         os.popen(fr"{cwd}/assets/script.exe")
     
 
-    def Stop_program(self):
+    def stop_program(self):
         try:
             os.system('TASKKILL /F /IM script.exe')
         except:
             pass 
         # TASKKILL /IM script.exe /T
+
+    def set_origin_entry(self):
+        folder_selected = filedialog.askdirectory()
+        self.origin_var.set(folder_selected)
+
+    def set_destiny_entry(self):
+        folder_selected = filedialog.askdirectory()
+        self.destiny_var.set(folder_selected)
 
 Application()
 # Criar exe tkinter: pyinstaller --onefile --noconsole --windowed screen.py
